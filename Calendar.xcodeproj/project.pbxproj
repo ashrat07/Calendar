@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		323282622105B05300EF2F07 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323282612105B05300EF2F07 /* CalendarViewController.swift */; };
+		32BCFD3D210717CD0030DDD1 /* CalendarScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BCFD3C210717CD0030DDD1 /* CalendarScene.swift */; };
+		32BCFD3F210719CB0030DDD1 /* CalendarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BCFD3E210719CB0030DDD1 /* CalendarConfig.swift */; };
+		32BCFD4521076F520030DDD1 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BCFD4421076F520030DDD1 /* Utility.swift */; };
+		32BCFD47210777FD0030DDD1 /* Agenda.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BCFD46210777FD0030DDD1 /* Agenda.swift */; };
 		32F80BF4210513AD00E53F8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F80BF3210513AD00E53F8B /* AppDelegate.swift */; };
 		32F80BF6210513AD00E53F8B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 32F80BF5210513AD00E53F8B /* art.scnassets */; };
 		32F80BF8210513AD00E53F8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F80BF7210513AD00E53F8B /* ViewController.swift */; };
@@ -35,6 +40,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		323282612105B05300EF2F07 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		32BCFD3C210717CD0030DDD1 /* CalendarScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScene.swift; sourceTree = "<group>"; };
+		32BCFD3E210719CB0030DDD1 /* CalendarConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarConfig.swift; sourceTree = "<group>"; };
+		32BCFD4421076F520030DDD1 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		32BCFD46210777FD0030DDD1 /* Agenda.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agenda.swift; sourceTree = "<group>"; };
 		32F80BF0210513AD00E53F8B /* Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32F80BF3210513AD00E53F8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32F80BF5210513AD00E53F8B /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -102,10 +112,15 @@
 				32F80BF3210513AD00E53F8B /* AppDelegate.swift */,
 				32F80BF5210513AD00E53F8B /* art.scnassets */,
 				32F80BF7210513AD00E53F8B /* ViewController.swift */,
+				323282612105B05300EF2F07 /* CalendarViewController.swift */,
+				32BCFD3C210717CD0030DDD1 /* CalendarScene.swift */,
+				32BCFD4421076F520030DDD1 /* Utility.swift */,
+				32BCFD3E210719CB0030DDD1 /* CalendarConfig.swift */,
 				32F80BF9210513AD00E53F8B /* Main.storyboard */,
 				32F80BFC210513AE00E53F8B /* Assets.xcassets */,
 				32F80BFE210513AE00E53F8B /* LaunchScreen.storyboard */,
 				32F80C01210513AE00E53F8B /* Info.plist */,
+				32BCFD46210777FD0030DDD1 /* Agenda.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -260,8 +275,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				323282622105B05300EF2F07 /* CalendarViewController.swift in Sources */,
+				32BCFD47210777FD0030DDD1 /* Agenda.swift in Sources */,
 				32F80BF8210513AD00E53F8B /* ViewController.swift in Sources */,
+				32BCFD3D210717CD0030DDD1 /* CalendarScene.swift in Sources */,
 				32F80BF4210513AD00E53F8B /* AppDelegate.swift in Sources */,
+				32BCFD4521076F520030DDD1 /* Utility.swift in Sources */,
+				32BCFD3F210719CB0030DDD1 /* CalendarConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,7 +458,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 9KBH5RKYEW;
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -459,7 +479,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 9KBH5RKYEW;
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
