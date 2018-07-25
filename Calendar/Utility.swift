@@ -9,76 +9,31 @@ class Utility {
     static let dateFormatter = DateFormatter()
 
     static let randomEventNames = [
-        "Operation Fairy",
-        "Operation Snow Crystal",
-        "Operation Harlequin",
-        "Operation Bump",
-        "Operation Knockdown",
-        "Operation Lipstick",
-        "Operation Hocus Pocus",
-        "Operation Sea Puma",
-        "Operation Ocean Thunder",
-        "Operation Brown Thunder",
-        "Operation Bull's Eye",
-        "Operation Olympia",
-        "Operation Blackjack",
-        "Operation Blade's Edge",
-        "Operation Oscar",
-        "Operation Alakazam",
-        "Operation Cyclone",
-        "Operation Hidden Redemption",
-        "Operation Red Nightmare",
-        "Operation Orange Champion",
-        "Operation Breastplate",
-        "Operation Judas Kiss",
-        "Operation Surprise Party",
-        "Operation Ferocity",
-        "Operation Whiz Kid",
-        "Operation Man Eater",
-        "Operation Voodoo Vibes",
-        "Operation Ocean Blade",
-        "Operation Blue Obelisk",
-        "Operation Blue Blade",
-        "Operation Jester",
-        "Operation Chronicle",
-        "Operation Poltergeist",
-        "Operation Saturate",
-        "Operation Nightmare",
-        "Operation Harlequin",
-        "Operation Pyramid",
-        "Operation Red Hearts",
-        "Operation Swamp Gate",
-        "Operation White Comet",
-        "Operation Homesick",
-        "Operation Bells 'N Whistles",
-        "Operation Free Rein",
-        "Operation Rock And Roar",
-        "Operation Typhoon",
-        "Operation Powder Snow",
-        "Operation Greenhouse",
-        "Operation Jungle Buffalo",
-        "Operation Blind Hammer",
-        "Operation Jungle Dust",
-        "Operation Close Shave",
-        "Operation Fruit Fly",
-        "Operation Poker Face",
-        "Operation Crossfire",
-        "Operation Hyperbole",
-        "Operation Dust Angel",
-        "Operation Bucking Bronco",
-        "Operation Green Ghost",
-        "Operation Gray Knuckle",
-        "Operation Swamp Vanguard",
-        "Operation Axe",
-        "Operation Alakazam",
-        "Operation Bad Juju",
-        "Operation Sapphire",
-        "Operation Bread And Water",
-        "Operation Poltergeist",
-        "Operation Bull's Eye",
-        "Operation Blue Vengeance",
-        "Operation Ocean Rain",
-        "Operation Black Paladin"
+        "Stand-up with Gaurav (weekly)",
+        "United flight to Redmond",
+        "Employee Q/A with Satya",
+        "Sprint Stand up",
+        "PM All Hands",
+        "Scrum outlook",
+        "Office tech talk",
+        "Q3 Outlook review",
+        "Buy Grocery",
+        "Microsoft Product sync",
+        "Microsoft 100 MAD party",
+        "Team Lunch",
+        "E+D Townhall",
+        "Hackathon",
+        "Hololens Workshop",
+        "C+T All Hands",
+        "Dinner with Wife",
+    ]
+
+    static let durations = [
+        "1 h",
+        "30 m",
+        "45 m",
+        "2 h",
+        "1 h 30 m"
     ]
 
     static func getRandomEventName() -> String {
@@ -95,7 +50,9 @@ class Utility {
         }
         if randomCount > 0 {
             for _ in 0...randomCount - 1 {
-                randomEventNames.append(getRandomEventName())
+                randomEventNames.append(getRandomEventName()
+                    + "\n\(getRandomInt(max: 12))" + ":00 " + (getRandomBool() ? "pm" : "am")
+                    + "\n" + durations[getRandomInt(max: durations.count)])
             }
         }
         return randomEventNames
