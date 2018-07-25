@@ -33,7 +33,7 @@ class CalendarViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        agendas = Utility.getRandomAgendas(daysPrevious: 0, daysNext: 4, minEventCount: 1, maxEventCount: 5)
+        agendas = Utility.getRandomAgendas(daysPrevious: 0, daysNext: 9, minEventCount: 0, maxEventCount: 4)
         
         // Run the view's session
         sceneView.session.run(getSessionConfiguration())

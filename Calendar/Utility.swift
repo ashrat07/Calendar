@@ -2,7 +2,7 @@
 //  Copyright 2013-2018 Microsoft Inc.
 //
 
-import Foundation
+import UIKit
 
 class Utility {
 
@@ -136,6 +136,28 @@ class Utility {
     static func format(date: Date, dateFormat: String = "d MMM, yyyy") -> String {
         dateFormatter.dateFormat = dateFormat
         return dateFormatter.string(from: date)
+    }
+
+}
+
+extension UIColor {
+
+    convenience init(red: Int, green: Int, blue: Int, a: Int = 0xFF) {
+        self.init(
+            red: CGFloat(red) / 255.0,
+            green: CGFloat(green) / 255.0,
+            blue: CGFloat(blue) / 255.0,
+            alpha: CGFloat(a) / 255.0
+        )
+    }
+
+    convenience init(argb: Int) {
+        self.init(
+            red: (argb >> 16) & 0xFF,
+            green: (argb >> 8) & 0xFF,
+            blue: argb & 0xFF,
+            a: (argb >> 24) & 0xFF
+        )
     }
 
 }
