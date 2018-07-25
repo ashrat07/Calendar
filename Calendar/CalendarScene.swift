@@ -7,17 +7,17 @@ import ARKit
 class CalendarScene {
 
     private static let colors : [UIColor] = [
-        UIColor(red:1.00, green:0.23, blue:0.19, alpha:1.0),
-        UIColor(red:1.00, green:0.18, blue:0.33, alpha:1.0),
-        UIColor(red:1.00, green:0.58, blue:0.00, alpha:1.0),
-        UIColor(red:1.00, green:0.80, blue:0.00, alpha:1.0),
-        UIColor(red:0.35, green:0.34, blue:0.84, alpha:1.0),
-        UIColor(red:0.20, green:0.67, blue:0.86, alpha:1.0),
-        UIColor(red:0.56, green:0.56, blue:0.58, alpha:1.0)
+        UIColor(red: 1.00, green: 0.23, blue: 0.19, alpha: 1.0),
+        UIColor(red: 1.00, green: 0.18, blue: 0.33, alpha: 1.0),
+        UIColor(red: 1.00, green: 0.58, blue: 0.00, alpha: 1.0),
+        UIColor(red: 1.00, green: 0.80, blue: 0.00, alpha: 1.0),
+        UIColor(red: 0.35, green: 0.34, blue: 0.84, alpha: 1.0),
+        UIColor(red: 0.20, green: 0.67, blue: 0.86, alpha: 1.0),
+        UIColor(red: 0.56, green: 0.56, blue: 0.58, alpha: 1.0)
     ]
 
-    private static let floorColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-    private static let stripeColor = UIColor.red
+    private static let floorColor = UIColor.green.withAlphaComponent(0.7) // UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)
+    private static let floorStripeColor = UIColor.red.withAlphaComponent(0.7)
     private static let gridColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1)
     private static let titleColor = UIColor(red: 0.35, green: 0.34, blue: 0.84, alpha: 1.0)
 
@@ -43,9 +43,9 @@ class CalendarScene {
     private func createFloor() {
         let node = SCNNode()
         addBox(to: node, config.cellWidth, config.lineWidth, 20 * Float(config.length), 0, 0, 10 * Float(config.length), 0, CalendarScene.floorColor)
-//        addBox(to: node, 10 * config.lineWidth, config.lineWidth, 20 * Float(config.length), -10 * config.lineWidth, 0, 10 * Float(config.length), 0, CalendarScene.stripeColor)
-        addBox(to: node, 10 * config.lineWidth, config.lineWidth, 20 * Float(config.length), -35 * config.lineWidth, 0, 10 * Float(config.length), 0, CalendarScene.stripeColor)
-        addBox(to: node, 10 * config.lineWidth, config.lineWidth, 20 * Float(config.length), Float(config.width), 0, 10 * Float(config.length), 0, CalendarScene.stripeColor)
+//        addBox(to: node, 10 * config.lineWidth, config.lineWidth, 20 * Float(config.length), -10 * config.lineWidth, 0, 10 * Float(config.length), 0, CalendarScene.floorStripeColor)
+        addBox(to: node, 10 * config.lineWidth, config.lineWidth, 20 * Float(config.length), -35 * config.lineWidth, 0, 10 * Float(config.length), 0, CalendarScene.floorStripeColor)
+        addBox(to: node, 10 * config.lineWidth, config.lineWidth, 20 * Float(config.length), Float(config.width), 0, 10 * Float(config.length), 0, CalendarScene.floorStripeColor)
         scene.rootNode.addChildNode(node)
     }
 
@@ -74,7 +74,7 @@ class CalendarScene {
         for (dayIndex, agenda) in agendas.enumerated() {
             for (eventIndex, _) in agenda.events.enumerated() {
                 let randomIndex = Utility.getRandomInt(max: CalendarScene.colors.count)
-                let color = CalendarScene.colors[randomIndex]
+                let color = CalendarScene.colors[randomIndex].withAlphaComponent(0.9)
                 addBox(to: node, config.cellWidth, config.cellHeight, config.cellLength, 0, Float(eventIndex), -Float(dayIndex), config.chamferRadius, color)
             }
         }
