@@ -52,7 +52,7 @@ class CalendarScene {
         self.z = z
         self.config = config
         self.agendas = agendas
-        createFloor()
+//        createFloor()
         createGrid()
         createBoxes()
         createDates()
@@ -109,8 +109,12 @@ class CalendarScene {
 
     private func createDates() {
         let node = SCNNode()
-        for (dayIndex, _) in agendas.enumerated() {
-            addDate(to: node, dayIndex: dayIndex, config.cellWidth, config.cellHeight, config.cellLength, Float(config.width), 0, -Float(dayIndex))
+        for (dayIndex, agenda) in agendas.enumerated() {
+            let color = UIColor.white.withAlphaComponent(CGFloat(1 - CGFloat(dayIndex) / CGFloat(agendas.count) / 2))
+            node.addChildNode(createBox(config.cellWidth * 5, config.lineWidth, config.cellLength / 2, -3 * config.cellWidth, -config.lineWidth * 2, -config.cellLength / 4 - Float(dayIndex), 0, color))
+            addDate(to: node, dayIndex: dayIndex, config.cellWidth, config.cellHeight, config.cellLength, config.cellWidth + Float(config.width), 0, -Float(dayIndex))
+            let count = String(agenda.events.count)
+            node.addChildNode(createAgendaCountText(count, config.cellWidth, config.cellHeight, config.cellLength, -config.cellWidth, 0, -Float(dayIndex)))
         }
         scene.rootNode.addChildNode(node)
     }
@@ -121,9 +125,9 @@ class CalendarScene {
         return createNode(box, matrix, color)
     }
 
-    private func createText(_ text: String) -> SCNText {
+    private func createText(_ text: String, color: UIColor = CalendarScene.titleColor) -> SCNText {
         let text = SCNText(string: text, extrusionDepth: 0.01)
-        text.firstMaterial?.diffuse.contents = CalendarScene.titleColor
+        text.firstMaterial?.diffuse.contents = color
         text.font = UIFont.systemFont(ofSize: 1)
         text.isWrapped = true
         text.alignmentMode = kCAAlignmentLeft
@@ -185,6 +189,16 @@ class CalendarScene {
         let matrix = SCNMatrix4Mult(SCNMatrix4MakeRotation(-.pi / 2, 1, 0, 0), SCNMatrix4Translate(translate(x - 0.5, y, z - 0.5), 0, 0, -l / 2)).scale(0.1)
         textNode.transform = matrix
         node.addChildNode(textNode)
+    }
+
+    private func createAgendaCountText(_ text: String, _ w: Float, _ h: Float, _ l: Float, _ x: Float, _ y: Float, _ z: Float) -> SCNNode {
+        let textNode = SCNNode(geometry: createText(text, color: CalendarScene.floorTitleColor))
+        let (min, max) = textNode.boundingBox
+        let pivot = SCNMatrix4MakeTranslation(0.5 * min.x, min.y + 0.5 * (max.y - min.y), min.z + 0.5 * (max.z - min.z))
+        textNode.pivot = pivot
+        let matrix = SCNMatrix4Mult(SCNMatrix4MakeRotation(-.pi / 2, 1, 0, 0), SCNMatrix4Translate(translate(x - 0.5, y, z - 0.5), 0, 0, -l / 2)).scale(0.1)
+        textNode.transform = matrix
+        return textNode
     }
 
     private func createNode(_ geometry: SCNGeometry, _ matrix: SCNMatrix4, _ color: UIColor) -> SCNNode {
