@@ -5,9 +5,6 @@
 import ARKit
 import SceneKit
 
-let CollisionCategoryPlane = 1 << 0
-let CollisionCategoryCube = 1 << 1
-
 class CalendarViewController: UIViewController {
 
     @IBOutlet var sceneView: ARSCNView!
@@ -25,7 +22,8 @@ class CalendarViewController: UIViewController {
         sceneView.scene = SCNScene()
         // Use default lighting
         sceneView.autoenablesDefaultLighting = true
-        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
+        sceneView.debugOptions = ARSCNDebugOptions.showFeaturePoints
+//        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
 
         addGestures()
     }
@@ -80,12 +78,22 @@ class CalendarViewController: UIViewController {
 
     @objc private func handleTap(sender: UITapGestureRecognizer) {
         let location = sender.location(in: self.view)
-        let x = location.x / self.view.bounds.size.width
-        if (x < 0.5) {
-
-        } else {
-
+        if let node = sceneView.hitTest(location, options: nil).first?.node,
+            node.name?.starts(with: "TAPPABLE_NODE") == true,
+            let last = node.name?.split(separator: "_").last,
+            let dayIndex = Int(String(last)) {
+            print("node tapped \(dayIndex)")
+            for agendaIndex in 0..<agendas[dayIndex].events.count {
+                let name = "\(dayIndex)_\(agendaIndex)"
+                if let boxNode = sceneView.scene.rootNode.childNodes.first(where: { $0.name == "BOX" }) {
+                    boxNode.childNodes.filter({ $0.name == name }).forEach({ toggle(node: $0) })
+                }
+            }
         }
+    }
+
+    func toggle(node: SCNNode) {
+        node.isHidden = !node.isHidden
     }
 
 }
@@ -105,6 +113,7 @@ extension CalendarViewController: ARSCNViewDelegate {
                     let y = planeAnchor.center.y + node.position.y
                     let z = planeAnchor.center.z + node.position.z
                     self.scene = CalendarScene(self.sceneView.scene, x, y, z, config, self.agendas)
+
                 }
             }
         }

@@ -9,17 +9,17 @@ class Utility {
     static let dateFormatter = DateFormatter()
 
     static let randomEventNames = [
-        "Stand-up with Gaurav (weekly)",
-        "United flight to Redmond",
-        "Employee Q/A with Satya",
+        "Stand-up with\n Gaurav (weekly)",
+        "United flight\n to Redmond",
+        "Employee Q/A\n with Satya",
         "Sprint Stand up",
         "PM All Hands",
         "Scrum outlook",
         "Office tech talk",
         "Q3 Outlook review",
         "Buy Grocery",
-        "Microsoft Product sync",
-        "Microsoft 100 MAD party",
+        "Microsoft Product\n sync",
+        "Microsoft 100 \nMAD party",
         "Team Lunch",
         "E+D Townhall",
         "Hackathon",
@@ -34,6 +34,19 @@ class Utility {
         "45 m",
         "2 h",
         "1 h 30 m"
+    ]
+
+    static let randomEventCount = [
+        1,
+        0,
+        2,
+        3,
+        1,
+        4,
+        2,
+        0,
+        3,
+        5
     ]
 
     static func getRandomEventName() -> String {
@@ -59,7 +72,10 @@ class Utility {
     }
 
     static func getRandomAgenda(dateIndex: Int, minEventCount: Int, maxEventCount: Int) -> Agenda {
-        if maxEventCount < minEventCount || (minEventCount == 0 && getRandomBool()) {
+        if dateIndex < randomEventCount.count {
+            let randomEventNames = getRandomEventNames(randomizeCount: false, count: randomEventCount[dateIndex])
+            return Agenda(dateIndex: dateIndex, events: randomEventNames)
+        } else if maxEventCount < minEventCount || (minEventCount == 0 && getRandomBool()) {
             return Agenda(dateIndex: dateIndex, events: [])
         } else {
             let randomEventNames = getRandomEventNames(randomizeCount: false, count: minEventCount + getRandomInt(max: maxEventCount - minEventCount))

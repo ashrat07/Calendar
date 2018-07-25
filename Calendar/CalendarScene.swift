@@ -102,8 +102,12 @@ class CalendarScene {
                 boxNode.addChildNode(createLeftText(event, config.cellWidth, config.cellHeight, config.cellLength, Float(config.width), 0, -Float(dayIndex)))
                 boxNode.addChildNode(createTopText(event, config.cellWidth, config.cellHeight, config.cellLength, Float(config.width), 0, -Float(dayIndex)))
                 node.addChildNode(boxNode)
+                boxNode.name = "\(dayIndex)_\(eventIndex)"
+                boxNode.isHidden = true
+                boxNode.focusBehavior = SCNNodeFocusBehavior.none
             }
         }
+        node.name = "BOX"
         scene.rootNode.addChildNode(node)
     }
 
@@ -111,10 +115,17 @@ class CalendarScene {
         let node = SCNNode()
         for (dayIndex, agenda) in agendas.enumerated() {
             let color = UIColor.white.withAlphaComponent(CGFloat(1 - CGFloat(dayIndex) / CGFloat(agendas.count) / 2))
-            node.addChildNode(createBox(config.cellWidth * 5, config.lineWidth, config.cellLength / 2, -3 * config.cellWidth, -config.lineWidth * 2, -config.cellLength / 4 - Float(dayIndex), 0, color))
+            let tappableNode = createBox(config.cellWidth * 4, config.lineWidth, config.cellLength / 2, -2 * config.cellWidth, -config.lineWidth * 2, -config.cellLength / 4 - Float(dayIndex), 0, color)
+            tappableNode.name = "TAPPABLE_NODE_\(dayIndex)"
+            node.addChildNode(tappableNode)
             addDate(to: node, dayIndex: dayIndex, config.cellWidth, config.cellHeight, config.cellLength, config.cellWidth + Float(config.width), 0, -Float(dayIndex))
-            let count = String(agenda.events.count)
-            node.addChildNode(createAgendaCountText(count, config.cellWidth, config.cellHeight, config.cellLength, -config.cellWidth, 0, -Float(dayIndex)))
+            let count: String
+            if agenda.events.count == 1 {
+                count = String(agenda.events.count) + " Event"
+            } else {
+                count = String(agenda.events.count) + " Events"
+            }
+            node.addChildNode(createAgendaCountText(count, config.cellWidth, config.cellHeight, config.cellLength, -config.cellWidth * 1.5, 0, -Float(dayIndex)))
         }
         scene.rootNode.addChildNode(node)
     }
@@ -129,10 +140,10 @@ class CalendarScene {
         let text = SCNText(string: text, extrusionDepth: 0.01)
         text.firstMaterial?.diffuse.contents = color
         text.font = UIFont.systemFont(ofSize: 1)
-        text.isWrapped = true
-        text.alignmentMode = kCAAlignmentLeft
-        text.truncationMode = kCATruncationEnd
-        text.containerFrame = CGRect(origin: .zero, size: CGSize(width: 10, height: 10))
+//        text.isWrapped = true
+//        text.alignmentMode = kCAAlignmentLeft
+//        text.truncationMode = kCATruncationEnd
+//        text.containerFrame = CGRect(origin: .zero, size: CGSize(width: 10, height: 10))
         return text
     }
 
