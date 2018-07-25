@@ -4,13 +4,13 @@
 
 struct CalendarConfig {
 
-    let cellWidth: Float = 0.3
-    let cellHeight: Float = 0.3
-    let cellLength: Float = 0.3
+    let cellWidth: Float = 0.4
+    let cellHeight: Float = 0.4
+    let cellLength: Float = 0.4
     let lineWidth: Float = 0.001
     let chamferRadius: Float = 0.02
 
-    static let standard: CalendarConfig = CalendarConfig(width: 1, height: 10, length: 20)
+    static let standard: CalendarConfig = CalendarConfig(width: 1, height: 10, length: 4)
 
     let width: Int
     let height: Int

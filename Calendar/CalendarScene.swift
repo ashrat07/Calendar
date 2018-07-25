@@ -16,7 +16,7 @@ class CalendarScene {
         UIColor(red: 0.56, green: 0.56, blue: 0.58, alpha: 1.0)
     ]
 
-    private static let floorColor = UIColor.green.withAlphaComponent(0.7) // UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)
+    private static let floorColor = UIColor.green.withAlphaComponent(0.7)
     private static let floorStripeColor = UIColor.red.withAlphaComponent(0.7)
     private static let gridColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1)
     private static let titleColor = UIColor(red: 0.35, green: 0.34, blue: 0.84, alpha: 1.0)
@@ -38,14 +38,18 @@ class CalendarScene {
         createFloor()
         createGrid()
         createBoxes()
+        createDates()
     }
 
     private func createFloor() {
         let node = SCNNode()
-        addBox(to: node, config.cellWidth, config.lineWidth, 20 * Float(config.length), 0, 0, 10 * Float(config.length), 0, CalendarScene.floorColor)
-//        addBox(to: node, 10 * config.lineWidth, config.lineWidth, 20 * Float(config.length), -10 * config.lineWidth, 0, 10 * Float(config.length), 0, CalendarScene.floorStripeColor)
-        addBox(to: node, 10 * config.lineWidth, config.lineWidth, 20 * Float(config.length), -35 * config.lineWidth, 0, 10 * Float(config.length), 0, CalendarScene.floorStripeColor)
-        addBox(to: node, 10 * config.lineWidth, config.lineWidth, 20 * Float(config.length), Float(config.width), 0, 10 * Float(config.length), 0, CalendarScene.floorStripeColor)
+        let stripeWidth = 10 * config.lineWidth
+        let length = 20 * Float(config.length)
+        addBox(to: node, Float(config.width) * config.cellWidth, config.lineWidth, length, 0, 0, length / 2, 0, CalendarScene.floorColor)
+        // addBox(to: node, stripeWidth, config.lineWidth, length, -stripeWidth, 0, length / 2, 0, CalendarScene.floorStripeColor)
+        // weird bug: -stripeWidth doesn't work
+        addBox(to: node, stripeWidth, config.lineWidth, length, -3.5 * stripeWidth, 0, length / 2, 0, CalendarScene.floorStripeColor)
+        addBox(to: node, stripeWidth, config.lineWidth, length, Float(config.width), 0, length / 2, 0, CalendarScene.floorStripeColor)
         scene.rootNode.addChildNode(node)
     }
 
@@ -81,10 +85,44 @@ class CalendarScene {
         scene.rootNode.addChildNode(node)
     }
 
+    private func createDates() {
+        let node = SCNNode()
+        for (dayIndex, _) in agendas.enumerated() {
+            addDate(to: node, dayIndex: dayIndex, config.cellWidth, config.cellHeight, config.cellLength, Float(config.width), 0, -Float(dayIndex))
+        }
+        scene.rootNode.addChildNode(node)
+    }
+
     private func addBox(to node: SCNNode, _ w: Float, _ h: Float, _ l: Float, _ x: Float, _ y: Float, _ z: Float, _ chamferRadius: Float, _ color: UIColor) {
         let box = SCNBox(width: cg(w), height: cg(h), length: cg(l), chamferRadius: cg(chamferRadius))
         let matrix = SCNMatrix4Translate(translate(x - 0.5, y, z - 0.5), w / 2, h / 2, -l / 2)
         node.addChildNode(createNode(box, matrix, color))
+    }
+
+    private func addDate(to node: SCNNode, dayIndex: Int, _ w: Float, _ h: Float, _ l: Float, _ x: Float, _ y: Float, _ z: Float) {
+        guard let date = Calendar.current.date(byAdding: .day, value: dayIndex, to: Date()) else {
+            return
+        }
+        let dateString = Utility.format(date: date)
+        let text = SCNText(string: dateString, extrusionDepth: 0.01)
+        text.firstMaterial?.diffuse.contents = UIColor.red
+        text.firstMaterial?.specular.contents = UIColor.blue
+        text.font = UIFont.systemFont(ofSize: 0.1)
+        let textNode = SCNNode(geometry: text)
+        centerText(node: textNode)
+
+        var matrix = SCNMatrix4Mult(SCNMatrix4MakeRotation(-.pi / 2, 1, 0, 0), SCNMatrix4Translate(translate(x - 0.5, y, z - 0.5), w / 2, h / 2, -l / 2))
+        matrix = SCNMatrix4Mult(matrix, SCNMatrix4MakeTranslation(-w / 2, -h / 2, 0))
+        textNode.transform = matrix
+        node.addChildNode(textNode)
+    }
+
+    func centerText(node: SCNNode) {
+        let (min, max) = node.boundingBox
+        let dx = 0.5 * min.x
+        let dy = min.y + 0.5 * (max.y - min.y)
+        let dz = min.z + 0.5 * (max.z - min.z)
+        node.pivot = SCNMatrix4MakeTranslation(dx, dy, dz)
     }
 
     private func createNode(_ geometry: SCNGeometry, _ matrix: SCNMatrix4, _ color: UIColor) -> SCNNode {

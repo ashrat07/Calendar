@@ -25,7 +25,7 @@ class CalendarViewController: UIViewController {
         sceneView.scene = SCNScene()
         // Use default lighting
         sceneView.autoenablesDefaultLighting = true
-        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
 
         addGestures()
     }
@@ -33,7 +33,7 @@ class CalendarViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        agendas = Utility.getRandomAgendas(daysPrevious: 0, daysNext: 19, minEventCount: 1, maxEventCount: 5)
+        agendas = Utility.getRandomAgendas(daysPrevious: 0, daysNext: 4, minEventCount: 1, maxEventCount: 5)
         
         // Run the view's session
         sceneView.session.run(getSessionConfiguration())
